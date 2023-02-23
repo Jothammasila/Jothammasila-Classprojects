@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter.messagebox import *
 from tkinter import simpledialog
 
+
 class Dice(tk.Tk):
 
     def __init__(self):
@@ -11,8 +12,8 @@ class Dice(tk.Tk):
 
         global die_dict
         self.die_dict = {}
-        
-        #---------counters---------------------------------------
+
+        # ---------counters---------------------------------------
         self.counter1 = 0
         self.counter2 = 0
         self.counter3 = 0
@@ -20,9 +21,9 @@ class Dice(tk.Tk):
         self.counter5 = 0
         self.counter6 = 0
 
-        self.counter =0
-        
-            # configure the root window
+        self.counter = 0
+
+        # configure the root window
         self.title("Dice Roller")
         self.geometry('480x640')
         self.configure(background="Grey")
@@ -30,11 +31,11 @@ class Dice(tk.Tk):
         self.canvas = tk.Canvas(
             self, width=1500, height=300, background="grey13", state="normal")
         self.canvas.pack()
-        
+
 # ------------------BUTTONS--------------------------------------------------------
         ttk.Button(self, text="Rolls",
                    command=self.roll).place(relx=.05, rely=.6)
-                   
+
 # ----------------------------ENTER THE NUMBER OF DICE / ROLLS-----------------------
 
     def roll(self):
@@ -61,36 +62,34 @@ class Dice(tk.Tk):
             self.table.heading('frequency', text='Frequency')
             self.table.heading('percentage', text='Percentage')
             self.table.pack()
-            
+
             self.face_range = 1/6
-            self.face_range = round(self.face_range,2)
+            self.face_range = round(self.face_range, 2)
             for i in self.random_outcome:
 
-                if i > 0.0 and i < self.face_range:
-                    self.counter1 +=1
+                if i >= 0 and i < self.face_range:
+                    self.counter1 += 1
 
-                elif i > self.face_range and i < self.face_range *2:
-                    self.counter2 +=1
+                elif i >= self.face_range and i < self.face_range * 2:
+                    self.counter2 += 1
 
-                elif i > self.face_range *2 and i < self.face_range *3:
-                    self.counter3 +=1
+                elif i >= self.face_range * 2 and i < self.face_range * 3:
+                    self.counter3 += 1
 
-                elif i > self.face_range *3 and i < self.face_range*4:
-                    self.counter4 +=1
+                elif i >= self.face_range * 3 and i < self.face_range*4:
+                    self.counter4 += 1
 
-                elif i > self.face_range *4 and i < self.face_range *5:
-                    self.counter5 +=1
+                elif i >= self.face_range * 4 and i < self.face_range * 5:
+                    self.counter5 += 1
 
-                elif i > self.face_range *5:
-                    self.counter6 +=1
+                elif i >= self.face_range * 5 and i<self.face_range *6:
+                    self.counter6 += 1
 
-
-
-                self.die_dict[1] = self.counter1 
-                self.die_dict[2] = self.counter2 
-                self.die_dict[3] = self.counter3 
-                self.die_dict[4] = self.counter4 
-                self.die_dict[5] = self.counter5 
+                self.die_dict[1] = self.counter1
+                self.die_dict[2] = self.counter2
+                self.die_dict[3] = self.counter3
+                self.die_dict[4] = self.counter4
+                self.die_dict[5] = self.counter5
                 self.die_dict[6] = self.counter6
 
             self.percentage_list = list()
@@ -104,10 +103,20 @@ class Dice(tk.Tk):
                 self.percentage_list.append(self.percentage)
 
                 self.data = (
-                    key, self.die_dict[key], f"{self.percentage:0.2f}")
+                    key, self.die_dict[key], f"{self.percentage:0.1f}")
 
                 self.table.insert(parent="", index="end", values=self.data)
-            self.table.insert(parent="", index="end", values=("", f"Σ ={sum(self.frequency_list)}", f"Σ ={sum(self.percentage_list):0.2f}"))
+            self.table.insert(parent="", index="end", values=(
+                "", f"Σ ={sum(self.frequency_list)}", f"Σ ={sum(self.percentage_list):0.1f}"))
+
+        self.random_outcome.clear()
+        self.counter1 = 0
+        self.counter2 = 0
+        self.counter3 = 0
+        self.counter4 = 0
+        self.counter5 = 0
+        self.counter6 = 0
+
 
 if __name__ == "__main__":
     dice = Dice()
